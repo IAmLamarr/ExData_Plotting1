@@ -6,6 +6,13 @@ library(dplyr)
 read_data <- function() {
   filepath <- "household_power_consumption.txt"
   
+  if (!file.exists(filepath)) {
+    archive_name <- "data.zip"
+    data_url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+    download.file(data_url, destfile = archive_name, method="curl")
+    unzip(archive_name)
+  }
+  
   date_interval <- interval(dmy("01.02.2007"), dmy("03.02.2007"))
   
   df <- as_tibble(fread(filepath))
